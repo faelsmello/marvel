@@ -33,6 +33,7 @@ export class SearchComponent {
     public players: Record<string, Heroe> = {};
     public isLoading: boolean = false;
     public hiddenDropdown = true;
+    public isNext = true;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -65,14 +66,12 @@ export class SearchComponent {
     }
 
     public selectPlayer(heroi: Heroe): void {
+        const typePlayer = this.isNext ? 'X' : 'O';
+        this.players[typePlayer] = heroi;
+
         this.resetHeroi();
-        if (this.players['x']) {
-            this.players['o'] = heroi;
-
-            return;
-        }
-
-        this.players['x'] = heroi;
+        this.isNext = !this.isNext;
+        this.eventEmitterPlayers.emit(this.players);
     }
 
     private resetHeroi(): void {

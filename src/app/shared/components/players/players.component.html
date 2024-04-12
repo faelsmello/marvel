@@ -1,0 +1,11 @@
+<section>
+    <ng-template
+        #listPlayers
+        [ngTemplateOutlet]="listPlayers"
+        *ngFor="let player of players"
+    >
+        <ul>
+            <li>{{ player | json }}</li>
+        </ul>
+    </ng-template>
+</section>
