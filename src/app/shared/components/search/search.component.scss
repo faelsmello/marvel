@@ -24,12 +24,14 @@ $width: 400px;
             height: 50px;
             box-sizing: border-box;
             font-family: var(--main-font-rubik);
-            &:focus {
+            &:focus,
+            &:valid {
                 outline: none;
                 border: solid 2px var(--main-bg-header);
                 background: whitesmoke;
             }
-            &:focus ~ label {
+            &:focus ~ label,
+            &:valid ~ label {
                 top: -6px;
                 left: 1rem;
                 font-size: 0.85rem;
@@ -47,6 +49,32 @@ $width: 400px;
             left: 1.25rem;
             top: 1rem;
             transition: $trans-time ease all;
+        }
+
+        &__dropdown {
+            list-style: none;
+            padding-inline-start: 0;
+            background: white;
+            max-width: 400px;
+            border-radius: 3px;
+            border: solid 1px $muted-color;
+            max-height: 300px;
+            overflow: auto;
+
+            li {
+                padding: 1rem;
+                border-bottom: solid 1px #dedede;
+                &:hover {
+                    background: #ec1d243b;
+                    cursor: pointer;
+                }
+                figure {
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    grid-gap: 1rem;
+                }
+            }
         }
     }
 }

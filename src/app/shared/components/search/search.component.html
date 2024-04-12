@@ -5,21 +5,39 @@
                 id="search"
                 type="text"
                 name="search"
-                class="form-field__input"
                 formControlName="query"
                 [attr.aria-label]="ariaLabel ? ariaLabel : label"
                 [required]="required"
                 autocomplete="off"
             />
-            <label
-                for="search"
-                class="form-field__label"
-                [innerText]="label"
-            ></label>
+            <label for="search" [innerText]="label"></label>
 
-            <ul>
-                <li></li>
-            </ul>
+            <ng-container *ngIf="!hiddenDropdown">
+                <ul class="form-field__dropdown">
+                    <ng-template
+                        #listHeroes
+                        [ngTemplateOutlet]="listHeroes"
+                        *ngFor="let heroe of heroes"
+                    >
+                        <li (click)="selectPlayer(heroe)">
+                            <figure>
+                                <img
+                                    [src]="heroe.thumb"
+                                    width="70"
+                                    height="70"
+                                />
+                                <figcaption
+                                    [innerText]="heroe.name"
+                                ></figcaption>
+                            </figure>
+                        </li>
+                    </ng-template>
+                    <li *ngIf="isLoading">Buscando herois...</li>
+                    <li *ngIf="!heroes.length && !isLoading">
+                        Nenhum resultado encontrado
+                    </li>
+                </ul>
+            </ng-container>
         </div>
     </form>
 </section>

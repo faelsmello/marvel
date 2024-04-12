@@ -1,1 +1,5 @@
-<app-search [label]="searchHeroes" [ariaLabel]="searchHeroes"></app-search>
+<app-search
+    [label]="searchHeroes"
+    [ariaLabel]="searchHeroes"
+    (eventEmitterPlayers)="eventPlayers($event)"
+></app-search>
