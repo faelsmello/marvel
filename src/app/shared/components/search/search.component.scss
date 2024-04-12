@@ -1,0 +1,52 @@
+$bg-color: #424242;
+$muted-color: mix(rgba(116, 130, 150, 0.2), $bg-color, 70%);
+$trans-time: 300ms;
+$width: 400px;
+
+.search {
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form-field {
+        position: relative;
+        input {
+            color: rgba(45, 58, 64, 0.3);
+            background: white;
+            color: $muted-color;
+            font-size: 18px;
+            padding: 1rem 1.25rem;
+            display: block;
+            width: $width;
+            border-radius: 4px;
+            border: 2px solid $muted-color;
+            height: 50px;
+            box-sizing: border-box;
+            font-family: var(--main-font-rubik);
+            &:focus {
+                outline: none;
+                border: solid 2px var(--main-bg-header);
+                background: whitesmoke;
+            }
+            &:focus ~ label {
+                top: -6px;
+                left: 1rem;
+                font-size: 0.85rem;
+                color: var(--main-bg-header);
+                background: whitesmoke;
+                padding: 0 0.25rem;
+            }
+        }
+        label {
+            color: $muted-color;
+            font-size: 1.25rem;
+            font-weight: normal;
+            position: absolute;
+            pointer-events: none;
+            left: 1.25rem;
+            top: 1rem;
+            transition: $trans-time ease all;
+        }
+    }
+}

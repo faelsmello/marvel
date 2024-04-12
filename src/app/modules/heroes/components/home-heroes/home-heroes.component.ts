@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './home-heroes.component.html',
   styleUrls: ['./home-heroes.component.scss'],
 })
-export class HomeHeroesComponent {}
+export class HomeHeroesComponent {
+    public searchHeroes = 'Buscar Personagem'
+}

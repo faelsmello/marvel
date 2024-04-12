@@ -1,1 +1,25 @@
-<p>search works!</p>
+<section class="search">
+    <form name="formSearch" [formGroup]="searchForm">
+        <div class="form-field">
+            <input
+                id="search"
+                type="text"
+                name="search"
+                class="form-field__input"
+                formControlName="query"
+                [attr.aria-label]="ariaLabel ? ariaLabel : label"
+                [required]="required"
+                autocomplete="off"
+            />
+            <label
+                for="search"
+                class="form-field__label"
+                [innerText]="label"
+            ></label>
+
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+    </form>
+</section>
