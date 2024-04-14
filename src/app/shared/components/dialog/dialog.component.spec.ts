@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DialogComponent } from './dialog.component';
 import { IDialogBox } from '../../interfaces/core';
 
-fdescribe('DialogComponent', () => {
+describe('DialogComponent', () => {
     let component: DialogComponent<unknown>;
     let fixture: ComponentFixture<DialogComponent<unknown>>;
 

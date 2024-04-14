@@ -7,12 +7,9 @@ import {
     filter,
     finalize,
     map,
-    Observable,
-    of,
     switchMap,
     tap,
 } from 'rxjs';
-import { IResult } from '../../interfaces/heroes';
 import { HeroeMapper } from '../../utils/heroe.mapper';
 import { Heroe } from '../../utils/heroe';
 
@@ -53,10 +50,12 @@ export class SearchComponent {
                 distinctUntilChanged(),
                 filter((value) => !!value),
                 switchMap((value) =>
-                    this.httpService.fetchHeroes((value as string).toLocaleLowerCase()).pipe(
-                        finalize(() => (this.isLoading = false)),
-                        map(HeroeMapper)
-                    )
+                    this.httpService
+                        .fetchHeroes((value as string).toLocaleLowerCase())
+                        .pipe(
+                            finalize(() => (this.isLoading = false)),
+                            map(HeroeMapper)
+                        )
                 )
             )
             .subscribe(

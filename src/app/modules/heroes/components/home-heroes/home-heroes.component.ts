@@ -27,8 +27,6 @@ export class HomeHeroesComponent {
             this.searchHeroes = `Selecionar Héroi O`;
         }
 
-        console.log(this.players);
-
         this.gameService.updatePlayers(this.players);
     }
 

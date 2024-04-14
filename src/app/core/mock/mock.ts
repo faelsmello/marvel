@@ -1698,3 +1698,22 @@ export const MOCK_PLAYERS = [
         score: 0,
     },
 ];
+
+export const MOCK_EVENT_PLAYER = {
+    X: {
+        id: 1009351,
+        name: 'Hulk',
+        thumb: 'http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0.jpg',
+    },
+    O: {
+        id: 1011361,
+        name: 'American Eagle (Jason Strongbow)',
+        thumb: 'http://i.annihil.us/u/prod/marvel/i/mg/f/80/4ce5a6d8b8f2a.jpg',
+    },
+};
+
+export const MOCK_HEROE = {
+    id: 1011361,
+    name: 'American Eagle (Jason Strongbow)',
+    thumb: 'http://i.annihil.us/u/prod/marvel/i/mg/f/80/4ce5a6d8b8f2a.jpg',
+};
