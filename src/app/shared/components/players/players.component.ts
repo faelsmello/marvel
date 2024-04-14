@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Heroe } from '../../utils/heroe';
+import { Component, Input, OnInit } from '@angular/core';
 import { Player } from '../../utils/players';
 
 @Component({
@@ -9,4 +8,5 @@ import { Player } from '../../utils/players';
 })
 export class PlayersComponent {
     @Input() public players!: Array<Player>;
+    @Input() public isHome: boolean = true;
 }

@@ -53,7 +53,7 @@ export class SearchComponent {
                 distinctUntilChanged(),
                 filter((value) => !!value),
                 switchMap((value) =>
-                    this.httpService.fetchHeroes(value as string).pipe(
+                    this.httpService.fetchHeroes((value as string).toLocaleLowerCase()).pipe(
                         finalize(() => (this.isLoading = false)),
                         map(HeroeMapper)
                     )

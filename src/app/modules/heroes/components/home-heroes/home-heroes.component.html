@@ -5,3 +5,9 @@
 ></app-search>
 
 <app-players [players]="players"></app-players>
+
+<ng-container *ngIf="players.length > 1">
+    <section class="container-button">
+        <button (click)="goToPlay()">Começar</button>
+    </section>
+</ng-container>

@@ -1,0 +1,83 @@
+@mixin baseFlex {
+    display: flex;
+    align-items: center;
+}
+
+.players {
+    @include baseFlex;
+    justify-content: center;
+
+    ul {
+        @include baseFlex;
+        padding-inline-start: 0;
+        min-width: 400px;
+        grid-gap: 1rem;
+
+        &.home {
+            flex-direction: column;
+            grid-gap: 2rem;
+        }
+
+        li {
+            &.list-players {
+                @include baseFlex;
+                align-items: flex-start;
+                grid-gap: 1rem;
+                width: 100%;
+                background: white;
+                border-radius: 3px;
+                border: solid 2px rgba($color: #748296, $alpha: 0.2);
+                justify-content: space-between;
+
+                .container {
+                    display: flex;
+                    grid-gap: 1rem;
+
+                    figure {
+                        margin: 0;
+                        display: flex;
+                    }
+
+                    .content {
+                        padding: 0.5rem 0;
+                        h4 {
+                            margin: 0;
+                            text-transform: uppercase;
+                            color: var(--main-bg-header);
+                            font-size: 1rem;
+                        }
+                        p {
+                            margin: 0;
+                            color: #ec1d24;
+                            font-size: 1rem;
+                            font-weight: 400;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                .score {
+                    background: rgba($color: #748296, $alpha: 0.2);
+                    color: white;
+                    width: 70px;
+                    height: 70px;
+                    @include baseFlex();
+                    justify-content: center;
+                    flex-direction: column;
+                    p {
+                        color: #484848;
+                        font-family: var(--main-font-comic);
+                        font-weight: 700;
+                        font-size: 2rem;
+                        margin: 0;
+                    }
+                    span {
+                        font-size: 0.85rem;
+                        color: #748296;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+    }
+}

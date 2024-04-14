@@ -1,0 +1,11 @@
+<section>
+    <div class="squares">
+        <ng-template
+            #listSquares
+            [ngTemplateOutlet]="listSquares"
+            *ngFor="let square of squares; let ind = index"
+        >
+            <button (click)="setPlayer(ind)">{{ square }}</button>
+        </ng-template>
+    </div>
+</section>

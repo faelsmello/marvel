@@ -1,0 +1,25 @@
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+
+    .squares {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+        justify-content: center;
+        grid-gap: 4px;
+        background: #c7c7c7;
+        button {
+            width: 150px;
+            height: 150px;
+            border: none;
+            background: white;
+            font-family: var(--main-font-comic);
+            font-weight: 500;
+            font-size: 5rem;
+            cursor: pointer;
+        }
+    }
+}

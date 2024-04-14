@@ -1,4 +1,6 @@
+import { GameService } from 'src/app/core/services/game.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Heroe } from 'src/app/shared/utils/heroe';
 import { Player } from 'src/app/shared/utils/players';
 @Component({
@@ -7,15 +9,30 @@ import { Player } from 'src/app/shared/utils/players';
     styleUrls: ['./home-heroes.component.scss'],
 })
 export class HomeHeroesComponent {
-    public searchHeroes = 'Buscar Personagem';
-    public players!: Array<Player>;
+    public searchHeroes = `Selecionar Héroi X`;
+    public players: Array<Player> = [];
 
-    constructor() {}
+    constructor(
+        private readonly _router: Router,
+        private readonly gameService: GameService
+    ) {}
 
     public eventPlayers(players: Record<string, Heroe>): void {
         this.players = [];
         for (let keyPlayer of Object.keys(players)) {
             this.players.push(new Player(players[keyPlayer], keyPlayer));
         }
+
+        if (this.players.length) {
+            this.searchHeroes = `Selecionar Héroi O`;
+        }
+
+        console.log(this.players);
+
+        this.gameService.updatePlayers(this.players);
+    }
+
+    public goToPlay(): void {
+        this._router.navigate(['game']);
     }
 }

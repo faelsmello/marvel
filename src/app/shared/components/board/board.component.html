@@ -1,0 +1,12 @@
+<section>
+    <app-players [isHome]="false" [players]="players"></app-players>
+    <app-squares
+        (eventWhoWon)="winner($event)"
+        [squares]="squares"
+    ></app-squares>
+    <app-dialog
+        [data]="isDialogMessage"
+        [isShow]="isShowWinner"
+        (eventActions)="closeDialog($event)"
+    ></app-dialog>
+</section>

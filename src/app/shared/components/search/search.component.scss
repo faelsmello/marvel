@@ -51,7 +51,7 @@ $width: 400px;
             transition: $trans-time ease all;
         }
 
-        &__dropdown {
+        .dropdown {
             list-style: none;
             padding-inline-start: 0;
             background: white;
@@ -60,12 +60,14 @@ $width: 400px;
             border: solid 1px $muted-color;
             max-height: 300px;
             overflow: auto;
+            position: absolute;
+            width: 100%;
 
             li {
                 padding: 1rem;
                 border-bottom: solid 1px #dedede;
                 &:hover {
-                    background: #ec1d243b;
+                    background: rgba(116, 130, 150, 0.2);
                     cursor: pointer;
                 }
                 figure {

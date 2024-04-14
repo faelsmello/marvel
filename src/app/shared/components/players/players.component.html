@@ -1,11 +1,31 @@
-<section>
-    <ng-template
-        #listPlayers
-        [ngTemplateOutlet]="listPlayers"
-        *ngFor="let player of players"
-    >
-        <ul>
-            <li>{{ player | json }}</li>
-        </ul>
-    </ng-template>
+<section class="players">
+    <ul [ngClass]="{ home: isHome }">
+        <ng-template
+            #listPlayers
+            [ngTemplateOutlet]="listPlayers"
+            *ngFor="let player of players"
+        >
+            <li class="list-players">
+                <div class="container">
+                    <figure>
+                        <img
+                            [src]="player.thumb"
+                            [alt]="player.name"
+                            width="70"
+                            height="70"
+                        />
+                    </figure>
+                    <div class="content">
+                        <p>Jogador {{ player.player }}</p>
+                        <h4 [innerText]="player.name"></h4>
+                    </div>
+                </div>
+
+                <div class="score">
+                    <p>{{ player.score }}</p>
+                    <span>Vitórias</span>
+                </div>
+            </li>
+        </ng-template>
+    </ul>
 </section>
