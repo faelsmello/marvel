@@ -14,6 +14,7 @@ export class SquaresComponent {
 
     public setPlayer(ind: number): void {
         if (this.squares[ind]) return;
+
         this.squares[ind] = this.isXNext ? 'X' : 'O';
         this.isXNext = !this.isXNext;
         this.eventWhoWon.emit(this.squares);

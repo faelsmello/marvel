@@ -1,31 +1,41 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from '@angular/core/testing';
 
 import { BoardComponent } from './board.component';
 import { SharedModule } from '../../shared.module';
 import { GameService } from 'src/app/core/services/game.service';
-import { of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { MOCK_PLAYERS } from 'src/app/core/mock/mock';
+import { Player } from '../../utils/players';
 
 describe('BoardComponent', () => {
     let component: BoardComponent;
     let fixture: ComponentFixture<BoardComponent>;
-    let gameService: jasmine.SpyObj<GameService>;
+    let gameServiceSpy: jasmine.SpyObj<GameService>;
 
-    beforeEach(() => {
-        const gameServiceSpy = jasmine.createSpyObj('GameService', [
+    beforeEach(async () => {
+        gameServiceSpy = jasmine.createSpyObj('GameService', [
+            'dataPlayers$',
             'getWinner',
             'updatePlayers',
             'completePlayers',
         ]);
-        TestBed.configureTestingModule({
+
+        await TestBed.configureTestingModule({
             declarations: [BoardComponent],
             imports: [SharedModule],
             providers: [{ provide: GameService, useValue: gameServiceSpy }],
         });
         fixture = TestBed.createComponent(BoardComponent);
         component = fixture.componentInstance;
-        gameService = TestBed.inject(
-            GameService
-        ) as jasmine.SpyObj<GameService>;
+
+        gameServiceSpy.dataPlayers$ = new BehaviorSubject<Array<Player>>(
+            MOCK_PLAYERS
+        );
         fixture.detectChanges();
     });
 
@@ -33,31 +43,46 @@ describe('BoardComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    // it('should subscribe to dataPlayers$ on ngOnInit', () => {
-    //     const players = [
-    //         { name: 'Player 1', score: 0 },
-    //         { name: 'Player 2', score: 0 },
-    //     ];
-    //     gameService.dataPlayers$.and.returnValue(of(players));
+    it('should call openDialog and update state on winner (draw)', fakeAsync(() => {
+        const isDraw = ['X', 'O', null, 'X', 'X', null, 'O', null, 'O'];
+        gameServiceSpy.getWinner.and.returnValue('draw');
 
-    //     component.ngOnInit();
+        component.winner(isDraw);
+        fixture.detectChanges();
 
-    //     expect(component.players).toEqual(players);
-    // });
+        expect(gameServiceSpy.getWinner).toHaveBeenCalledWith(isDraw);
+        expect(component.isShowWinner).toBeTrue();
+        expect(component.isDialogMessage).toEqual({ data: 'Deu empate!' });
+    }));
 
-    // it('should call gameService methods correctly when winner is found', () => {
-    //     const mockSquares = ['X', 'X', 'X', null, null, null, null, null, null];
-    //     const mockPlayer = { name: 'Player 1', score: 0 };
-    //     gameService.getWinner.and.returnValue('X');
+    it('should call openDialog and update state on winner (X)', fakeAsync(() => {
+        const isXWin = ['X', 'X', 'X', null, null, null, null, null, null];
+        gameServiceSpy.getWinner.and.returnValue('X');
 
-    //     component.winner(mockSquares);
+        component.winner(isXWin);
+        fixture.detectChanges();
+        expect(gameServiceSpy.getWinner).toHaveBeenCalledWith(isXWin);
+        expect(component.isShowWinner).toBeTrue();
+        expect(component.isDialogMessage).toEqual({
+            data: `Hulk é o Vencedor!`,
+        });
+    }));
 
-    //     expect(gameService.getWinner).toHaveBeenCalledWith(mockSquares);
-    //     expect(gameService.updatePlayers).toHaveBeenCalledWith([mockPlayer]);
-    // });
-
-    // it('should call completePlayers on ngOnDestroy', () => {
-    //     component.ngOnDestroy();
-    //     expect(gameService.completePlayers).toHaveBeenCalled();
-    // });
+    it('should call closeDialog', fakeAsync(() => {
+        const isArrayNull = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+        ];
+        component.closeDialog(true);
+        fixture.detectChanges();
+        expect(component.isShowWinner).toBeFalse();
+        expect(component.squares).toEqual(isArrayNull);
+    }));
 });

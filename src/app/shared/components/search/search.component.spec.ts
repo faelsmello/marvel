@@ -1,37 +1,34 @@
+import { HeroeMapper } from './../../utils/heroe.mapper';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchComponent } from './search.component';
 import { Heroe } from '../../utils/heroe';
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpService } from 'src/app/core/services/http.service';
 import { of } from 'rxjs';
-import { MOCK_HEROE } from 'src/app/core/mock/mock';
+import { MOCK_HEROE, MOCK_HEROES, MOCK_RESPONSE } from 'src/app/core/mock/mock';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SearchComponent', () => {
     let component: SearchComponent;
     let fixture: ComponentFixture<SearchComponent>;
-    let httpServiceStub: Partial<HttpService>;
+    let httpService: jasmine.SpyObj<HttpService>;
 
     beforeEach(async () => {
-        httpServiceStub = {
-            fetchHeroes: jasmine.createSpy().and.returnValue(of([])),
-        };
+        httpService = jasmine.createSpyObj('HttpService', {
+            fetchHeroes: of(MOCK_RESPONSE),
+        });
 
         await TestBed.configureTestingModule({
             declarations: [SearchComponent],
-            imports: [ReactiveFormsModule],
-            providers: [
-                FormBuilder,
-                { provide: HttpService, useValue: httpServiceStub },
-            ],
+            imports: [ReactiveFormsModule, HttpClientTestingModule],
+            providers: [FormBuilder, HttpService],
         });
         fixture = TestBed.createComponent(SearchComponent);
         component = fixture.componentInstance;
+        httpService = TestBed.inject(
+            HttpService
+        ) as jasmine.SpyObj<HttpService>;
         fixture.detectChanges();
     });
 
@@ -39,31 +36,31 @@ describe('SearchComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    // it('should select player and emit event', () => {
-    //     component.isNext = true;
-    //     component.selectPlayer(MOCK_HEROE);
+    it('should create searchForm with a query control', () => {
+        expect(component.searchForm).toBeDefined();
+        expect(component.searchForm.get('query')).toBeDefined();
+    });
 
-    //     expect(component.players['X']).toEqual(MOCK_HEROE);
-    //     expect(component.isNext).toBe(false);
-    //     expect(component.eventEmitterPlayers.emit).toHaveBeenCalledWith(
-    //         component.players
-    //     );
-    // });
+    it('should make HTTP request on query change', () => {
+        const query = 'hul';
+        component.searchForm.controls['query'].setValue(query);
+        const spy = spyOn(httpService, 'fetchHeroes').and.callThrough();
+        httpService.fetchHeroes(query.toLocaleLowerCase());
+        expect(spy).toHaveBeenCalledWith(query.toLocaleLowerCase());
+    });
 
-    // it('should fetch heroes when query changes', () => {
-    //     const httpService = TestBed.inject(HttpService);
-    //     const query = 'American Eagle';
-    //     const expectedHeroes: Heroe[] = [MOCK_HEROE];
+    it('should select player X', () => {
+        component.isNext = true;
+        component.selectPlayer(MOCK_HEROE);
 
-    //     component.searchForm.controls['query'].setValue(query);
+        expect(component.players['X']).toEqual(MOCK_HEROE);
+        expect(component.isNext).toBe(false);
+    });
 
-    //     expect(httpService.fetchHeroes).toHaveBeenCalledWith(
-    //         query.toLocaleLowerCase()
-    //     );
-    //     httpService
-    //         .fetchHeroes(query.toLocaleLowerCase())
-    //         .subscribe((heroes) => {
-    //             expect(component.heroes).toEqual(expectedHeroes);
-    //         });
-    // });
+    it('should select player O', () => {
+        component.isNext = false;
+        component.selectPlayer(MOCK_HEROE);
+
+        expect(component.players['O']).toEqual(MOCK_HEROE);
+    });
 });

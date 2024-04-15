@@ -1,4 +1,4 @@
-import { ICharacters, IResult } from '../interfaces/heroes';
+import { IResult } from '../interfaces/heroes';
 
 export class Heroe {
     id: number;
