@@ -64,7 +64,7 @@ describe('BoardComponent', () => {
         expect(gameServiceSpy.getWinner).toHaveBeenCalledWith(isXWin);
         expect(component.isShowWinner).toBeTrue();
         expect(component.isDialogMessage).toEqual({
-            data: `Hulk é o Vencedor!`,
+            data: `Hulk é o vencedor!`,
         });
     }));
 
