@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             const indPlayer = this.getPlayerWinner(win);
             this.players[indPlayer].score += 1;
             this.gameService.updatePlayers(this.players);
-            this.openDialog(`${this.players[indPlayer].name} é o Vencedor!`);
+            this.openDialog(`${this.players[indPlayer].name} é o vencedor!`);
         }
     }
 
